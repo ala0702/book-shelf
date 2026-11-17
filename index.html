@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <title>Document</title>
+    <title>Book library</title>
 </head>
+
 <body>
-    
+    <div>
+        <h1>This is your book library.</h1>
+    </div>
+    <div>
+        <div id="bookCollection">
+
+
+        </div>
+    </div>
+    <dialog id="book-dialog">
+        <p>Add new book position.</p>
+        <form id="book-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" required>
+
+            <label for="author">Author</label>
+            <input type="text" id="author" required>
+
+            <label for="num-pages">Number of pages</label>
+            <input type="number" min=1 id="num-pages" required>
+
+            <label for="is-read">Did you already read this book?</label>
+            <input type="checkbox" id="is-read">
+            <button>Add book.</button>
+        </form>
+        <button type="button" command="close" commandfor="book-dialog">Cancel</button>
+    </dialog>
+    <div>
+        <button id="new-book-btn" command="show-modal" commandfor="book-dialog">Add new book position</button>
+    </div>
 </body>
+
 </html>

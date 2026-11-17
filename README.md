@@ -38,13 +38,11 @@ user action  →  update the data (array)  →  displayBooks() re-renders the pa
 I wrote all of the JavaScript logic myself. Along the way I learned:
 
 - **Object constructors and prototypes**: creating objects with `new`, what `new` actually does, and why shared methods belong on the prototype instead of being copied into every object
-- **How `this` works**: why it depends on how a function is called, and why arrow functions don't have their own `this`. I ran into this directly when a button's event handler lost track of which book it belonged to
-- **Separating data from display**: keeping the data in an array and re-rendering the view from it, instead of storing information in the HTML. I learned this the hard way when a CSS class I added in a click handler disappeared, because the card was rebuilt from scratch right after
+- **How `this` works**: why it depends on how a function is called, and why arrow functions don't have their own `this`.
+- **Separating data from display**: keeping the data in an array and re-rendering the view from it, instead of storing information in the HTML.
 - **DOM manipulation**: building elements with `createElement` and filling them with `textContent`, and why `innerHTML` with user input can open the door to XSS attacks
 - **Events and forms**: listening for `submit` on the form instead of `click` on the button, and using `event.preventDefault()` to stop the page from reloading
-- **The `<dialog>` element** for a modal form with built-in keyboard and accessibility support
-- **Arrays**: why `findIndex` works for finding objects by a property while `indexOf` doesn't, and why checking `if (index)` is a bug when the index can be `0` or `-1`
-- **Debugging**: reading errors in the console, logging values with `console.log`, and inspecting elements and their classes in Chrome DevTools to find out why a style wasn't applied
+- **The `<dialog>` element** for a modal form with built-in keyboard and accessibility support.
 
 ## A note on the styling
 

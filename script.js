@@ -49,6 +49,7 @@ const displayBooks = function() {
 
         const isReadSTatusText = document.createElement("div")
         isReadSTatusText.classList.add("book-status")
+        if (element.isDone) isReadSTatusText.classList.add("done");
         isReadSTatusText.textContent = `${element.isDone ? "FINISHED" : "TO READ"}`
         subText.append(isReadSTatusText)
         const toggleIsReadButton = document.createElement('button')

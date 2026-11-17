@@ -1,0 +1,334 @@
+/* ===== Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+input, button {
+  font: inherit;
+}
+
+/* ===== Variables: a dark room, rain on the glass, one candle ===== */
+:root {
+  --night: #0e0c0b;          /* almost black, warm */
+  --fog: rgba(150, 160, 172, 0.10);
+  --glass: rgba(34, 30, 28, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.07);
+
+  --text: #ece3d6;           /* warm off-white */
+  --text-muted: #a89f94;
+  --text-faint: #958c82;
+
+  --flame: #f0a54a;
+  --flame-soft: rgba(240, 150, 60, 0.35);
+  --flame-faint: rgba(240, 150, 60, 0.12);
+  --ember: #c2563a;
+
+  --font: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --space-s: 0.5rem;
+  --space-m: 1rem;
+  --space-l: 2.5rem;
+  --radius: 4px;
+}
+
+/* ===== Page: dark room, misty window above, candlelight below ===== */
+body {
+  font-family: var(--font);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(240, 150, 60, 0.22), transparent 55%),
+    linear-gradient(to bottom, #2a2d31 0%, #17161a 35%, var(--night) 75%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: var(--space-l) var(--space-m);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Raindrops on the glass: small blurred dots, slowly sliding down */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle, rgba(220, 228, 238, 0.35) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle, rgba(220, 228, 238, 0.25) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(220, 228, 238, 0.20) 0 2px, transparent 3.5px);
+  background-size: 47px 61px, 31px 43px, 89px 113px;
+  background-position: 0 0, 13px 21px, 37px 7px;
+  animation: drops 18s linear infinite;
+}
+
+@keyframes drops {
+  from { background-position: 0 0, 13px 21px, 37px 7px; }
+  to   { background-position: 0 610px, 13px 451px, 37px 1137px; }
+}
+
+/* Fog on the window: a soft haze over the top of the page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0 0 50% 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--fog), transparent);
+}
+
+/* ===== Heading: thin, italic, lowercase, with a candle flame ===== */
+h1 {
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  margin-bottom: var(--space-l);
+}
+
+/* A small CSS flame before the heading */
+h1::before {
+  content: "";
+  display: inline-block;
+  width: 0.35em;
+  height: 0.6em;
+  margin-right: 0.4em;
+  vertical-align: middle;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(ellipse at 50% 70%, #fff4d6 0%, var(--flame) 45%, rgba(240, 120, 40, 0) 75%);
+  box-shadow: 0 0 18px 6px var(--flame-soft);
+  transform-origin: 50% 100%;
+  animation: flame 3s ease-in-out infinite;
+}
+
+@keyframes flame {
+  0%, 100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+  30%      { transform: scale(1.05, 0.95) rotate(2deg); opacity: 0.9; }
+  60%      { transform: scale(0.96, 1.06) rotate(-2deg); opacity: 1; }
+  80%      { transform: scale(1.02) rotate(1deg); opacity: 0.85; }
+}
+
+/* ===== Book collection: books standing on a windowsill ===== */
+#bookCollection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-l) var(--space-m);
+  padding-bottom: var(--space-l);
+  margin-bottom: var(--space-l);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6), 0 24px 40px -20px var(--flame-faint);
+}
+
+/* ===== Card: a grey book behind fogged glass ===== */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-m) var(--space-m) var(--space-m) 1.3rem;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+  border-left: 6px solid #3a3633;      /* the book's spine */
+  border-radius: 2px var(--radius) var(--radius) 2px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+/* Candlelight from below on hover, gently flickering */
+@keyframes candlelight {
+  0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 22px 40px -14px var(--flame-soft); }
+  40%      { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 26px 46px -12px rgba(240, 150, 60, 0.45); }
+  70%      { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 20px 36px -16px rgba(240, 150, 60, 0.28); }
+}
+
+.book-card:hover {
+  transform: translateY(-3px);
+  border-left-color: #5a4636;
+  animation: candlelight 3s ease-in-out infinite;
+}
+
+.book-title {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.book-description {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-s);
+  font-style: italic;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+/* ===== Status: tiny, widely spaced letters ("p a r a d i s e") ===== */
+.book-status {
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: var(--text-faint);
+}
+
+.book-status.done {
+  color: var(--flame);
+  text-shadow: 0 0 10px var(--flame-soft);
+}
+
+/* ===== Buttons: minimal, lowercase, glowing on hover ===== */
+button {
+  cursor: pointer;
+  font-style: italic;
+  font-size: 1rem;
+  text-transform: lowercase;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-muted);
+  transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  color: var(--text);
+  border-color: var(--flame);
+  box-shadow: 0 0 14px var(--flame-faint);
+}
+
+button:focus-visible {
+  outline: 1px solid var(--flame);
+  outline-offset: 3px;
+}
+
+/* Remove: quiet until hovered, then a glowing ember */
+.delete-book-button {
+  align-self: flex-start;
+  border-color: transparent;
+  color: var(--text-faint);
+  padding-left: 0;
+}
+
+.delete-book-button:hover {
+  color: var(--ember);
+  border-color: transparent;
+  box-shadow: none;
+  text-shadow: 0 0 8px rgba(194, 86, 58, 0.5);
+}
+
+/* Main "Add new book" button: warm, like a lit candle */
+#new-book-btn {
+  font-size: 1.15rem;
+  padding: 0.6rem 1.6rem;
+  color: var(--text);
+  border-color: var(--flame-soft);
+  box-shadow: 0 0 20px var(--flame-faint), inset 0 0 12px var(--flame-faint);
+}
+
+#new-book-btn:hover {
+  border-color: var(--flame);
+  box-shadow: 0 0 30px var(--flame-soft), inset 0 0 16px var(--flame-faint);
+}
+
+/* ===== Dialog: a note written by candlelight ===== */
+dialog {
+  margin: auto;
+  width: min(90vw, 420px);
+  padding: var(--space-l) 2rem;
+  color: var(--text);
+  background: rgba(24, 21, 19, 0.92);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 60px -20px var(--flame-soft);
+}
+
+dialog::backdrop {
+  background: rgba(8, 7, 6, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+dialog > p,
+dialog > h2 {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.8rem;
+  text-transform: lowercase;
+  margin-bottom: var(--space-m);
+}
+
+#book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: var(--space-m);
+}
+
+#book-form label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--text-faint);
+}
+
+#book-form input:not([type="checkbox"]) {
+  padding: 0.3rem 0;
+  margin-bottom: var(--space-m);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.15rem;
+}
+
+#book-form input:not([type="checkbox"]):focus {
+  outline: none;
+  border-bottom-color: var(--flame);
+  box-shadow: 0 8px 12px -10px var(--flame-soft);
+}
+
+#book-form input:user-invalid {
+  border-bottom-color: var(--ember);
+}
+
+#book-form input[type="checkbox"] {
+  align-self: flex-start;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--flame);
+  margin: 0.3rem 0 var(--space-m);
+}
+
+#book-form button {
+  align-self: flex-start;
+  color: var(--text);
+  border-color: var(--flame-soft);
+}
+
+/* ===== Respect users who prefer less motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  h1::before,
+  .book-card:hover {
+    animation: none;
+  }
+
+  .book-card:hover {
+    transform: none;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
